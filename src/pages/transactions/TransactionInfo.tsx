@@ -3,17 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../../others/NavBar";
 import { Card, ListGroup } from "react-bootstrap";
 import { goBack, rupee } from "../../utils/icons";
+import useFinanceContext from "../../Context/FinanceContext";
 
 const TransactionInfo = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  let allTransactions = JSON.parse(
-    localStorage.getItem("transactions") || "[]"
-  );
+  // let allTransactions = JSON.parse(
+  //   localStorage.getItem("transactions") || "[]"
+  // );
+  const [allTransactions] = useFinanceContext();
   const [cardData] = allTransactions.filter(
     (data: any) => parseInt(data.key) === parseInt(id || "")
   );
+  console.log("cardData", cardData);
 
   return (
     <>

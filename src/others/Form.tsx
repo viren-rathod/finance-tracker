@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import { Button } from "react-bootstrap";
 import useValidation from "./useValidation";
 import { useLocation, useNavigate } from "react-router-dom";
+import useFinanceContext, { transaction } from "../Context/FinanceContext";
 
 const Form = () => {
   //
@@ -31,13 +32,17 @@ const Form = () => {
 
   const [err, setErr] = useState(initialValues);
   const { validateField } = useValidation({ setErr });
-  let currentUser = initialValues;
+  const [transactions, setTransactions] = useFinanceContext();
+  // console.log(transactions, setTransactions);
+
+  let currentUser: transaction = initialValues;
 
   if (id) {
-    const allData = JSON.parse(localStorage.getItem("transactions") || "[]");
-    currentUser = allData.find(
-      (user: typeof initialValues) => user.key === parseInt(id)
-    );
+    // const allData = JSON.parse(localStorage.getItem("transactions") || "[]");
+    const allData = transactions;
+    currentUser =
+      allData.find((user: typeof initialValues) => user.key === parseInt(id)) ??
+      initialValues;
   }
 
   let { values, handleBlur, handleChange, handleSubmit, touched } = useFormik({
@@ -148,7 +153,8 @@ const Form = () => {
     /* Form Submit */
     const uniqueId = new Date().getTime();
     let allData: (typeof newTransaction)[] = [];
-    allData = JSON.parse(localStorage.getItem("transactions") || "[]");
+    // allData = JSON.parse(localStorage.getItem("transactions") || "[]");
+    allData = transactions;
     let newTransaction = { ...values, key: uniqueId };
     if (id) {
       allData = allData.map((data) => {
@@ -160,7 +166,7 @@ const Form = () => {
     } else {
       allData.push(newTransaction);
     }
-    localStorage.setItem("transactions", JSON.stringify(allData));
+    setTransactions([...allData]);
     navigate("/home");
   };
 
