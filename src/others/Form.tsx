@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import form from "react-bootstrap/Form";
 import { accounts, months, transactionTypes } from "../utils/Constants";
@@ -7,8 +7,20 @@ import { useFormik } from "formik";
 import { Button } from "react-bootstrap";
 import useValidation from "./useValidation";
 import { useLocation, useNavigate } from "react-router-dom";
-import useFinanceContext, { transaction } from "../Context/FinanceContext";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setTransaction } from "../Store/slices/financeSlice";
+export interface transaction {
+  transactionType: string;
+  amount: string;
+  key: number;
+  monthYear: string;
+  receipt: string;
+  toAccount: string;
+  user: string;
+  fromAccount: string;
+  tDate: string;
+  notes: string;
+}
 const Form = () => {
   //
   const user = localStorage.getItem("activeUser");
@@ -32,18 +44,23 @@ const Form = () => {
 
   const [err, setErr] = useState(initialValues);
   const { validateField } = useValidation({ setErr });
-  const [transactions, setTransactions] = useFinanceContext();
-  // console.log(transactions, setTransactions);
+  const dispatch = useDispatch();
+  const { transactions } = useSelector((state: any) => state.finance);
 
   let currentUser: transaction = initialValues;
+  const checkMode = () => {
+    if (id) {
+      const allData = transactions;
+      currentUser =
+        allData.find((user: typeof initialValues) => user.key === id) ??
+        initialValues;
+    }
+  };
 
-  if (id) {
-    // const allData = JSON.parse(localStorage.getItem("transactions") || "[]");
-    const allData = transactions;
-    currentUser =
-      allData.find((user: typeof initialValues) => user.key === parseInt(id)) ??
-      initialValues;
-  }
+  useEffect(() => {
+    checkMode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkMode()]);
 
   let { values, handleBlur, handleChange, handleSubmit, touched } = useFormik({
     initialValues: id ? currentUser : initialValues,
@@ -153,7 +170,6 @@ const Form = () => {
     /* Form Submit */
     const uniqueId = new Date().getTime();
     let allData: (typeof newTransaction)[] = [];
-    // allData = JSON.parse(localStorage.getItem("transactions") || "[]");
     allData = transactions;
     let newTransaction = { ...values, key: uniqueId };
     if (id) {
@@ -163,10 +179,10 @@ const Form = () => {
         }
         return data;
       });
+      dispatch(setTransaction([...allData]));
     } else {
-      allData.push(newTransaction);
+      dispatch(setTransaction([newTransaction, ...allData]));
     }
-    setTransactions([...allData]);
     navigate("/home");
   };
 

@@ -1,33 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import NavBar from "../../others/NavBar";
 import ShowData from "./ShowData";
 import GroupBy from "../../others/GroupBy";
-import useFinanceContext from "../../Context/FinanceContext";
+import { useSelector } from "react-redux";
 
 const ShowTransactions = () => {
   const user = localStorage.getItem("activeUser");
   const userEmail: string = JSON.parse(user || "{}").email;
-  const [allTransactions] = useFinanceContext();
+  const { transactions } = useSelector((state: any) => state.finance);
 
-  // let allTransactions = JSON.parse(
-  //   localStorage.getItem("transactions") || "[]"
-  // );
-  // let oldTransactions = allTransactions && [...allTransactions];
-  // oldTransactions = oldTransactions.filter(
-  //   (item: any) => item.user === userEmail
-  // );
-
-  let oldTransactions = allTransactions && [...allTransactions];
+  let oldTransactions = transactions && [...transactions];
   oldTransactions = oldTransactions.filter(
     (item: any) => item.user === userEmail
   );
 
-  const [transaction, setTransaction] = useState(oldTransactions);
+  const [transaction, setT] = useState(oldTransactions);
 
   return (
     <>
       <NavBar />
-      <GroupBy transaction={oldTransactions} setTransaction={setTransaction} />
+      <GroupBy transaction={oldTransactions} setT={setT} />
       <ShowData transaction={transaction} oldTransactions={oldTransactions} />
     </>
   );

@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { columnTitles } from "../utils/Constants";
 
-const GroupBy = ({ transaction, setTransaction }: any) => {
+const GroupBy = ({ transaction, setT }: any) => {
   interface DataItem {
     tDate: string;
     monthYear: string;
@@ -22,6 +22,7 @@ const GroupBy = ({ transaction, setTransaction }: any) => {
   };
 
   const [flag, setFlag] = useState(false);
+
   const handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
     const field = event.target.value;
     const cloneData: DataItem[] = transaction && [...transaction];
@@ -41,13 +42,13 @@ const GroupBy = ({ transaction, setTransaction }: any) => {
       return group;
     }, {});
     */
-    setTransaction(groupedData);
+    setT(groupedData);
   };
 
   function handleResetGroupBy(
     event: React.MouseEvent<HTMLButtonElement>
   ): void {
-    setTransaction(transaction);
+    setT(transaction);
     setFlag(false);
   }
 

@@ -18,7 +18,7 @@ const ShowTable = ({ title, sort, arr }: any) => {
   const [pagination, setPagination] = useState({
     start: 0,
     currentPage: 1,
-    itemPerPage: 2,
+    itemPerPage: 3,
   });
   const lastItemIndex = pagination?.currentPage * pagination?.itemPerPage;
   const firstItemIndex = lastItemIndex - pagination?.itemPerPage;
@@ -48,7 +48,6 @@ const ShowTable = ({ title, sort, arr }: any) => {
             <table className="table table-hover">
               <thead>
                 <tr key={0}>
-                  {/* <th className="text-center">#</th> */}
                   {columnTitles.map((t) => {
                     return (
                       <th key={t.id} onClick={() => sort(t.label, title)}>
@@ -65,7 +64,6 @@ const ShowTable = ({ title, sort, arr }: any) => {
                 {myArr.map((item: any, index: number) => {
                   return (
                     <tr key={index + 1}>
-                      {/* <td className="pt-5">{index + 1}</td> */}
                       <td className="pt-5">{item.tDate}</td>
                       <td className="pt-5">{item.monthYear}</td>
                       <td className="pt-5">{item.transactionType}</td>

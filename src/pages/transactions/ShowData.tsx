@@ -12,7 +12,6 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
       setTempData(oldTransactions);
     }
   }, [transaction, oldTransactions]);
-  // console.log("allTransactions", oldTransactions);
 
   const sort = (name: string, title: string) => {
     if (sortMethod > 2) {
