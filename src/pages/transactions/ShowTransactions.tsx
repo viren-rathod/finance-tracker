@@ -3,12 +3,12 @@ import NavBar from "../../others/NavBar";
 import ShowData from "./ShowData";
 import GroupBy from "../../others/GroupBy";
 import { useSelector } from "react-redux";
+import { RootState } from "../../Store";
 
 const ShowTransactions = () => {
   const user = localStorage.getItem("activeUser");
   const userEmail: string = JSON.parse(user || "{}").email;
-  const { transactions } = useSelector((state: any) => state.finance);
-
+  const { transactions } = useSelector((state: RootState) => state.finance);
   let oldTransactions = transactions && [...transactions];
   oldTransactions = oldTransactions.filter(
     (item: any) => item.user === userEmail
