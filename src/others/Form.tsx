@@ -4,11 +4,11 @@ import form from "react-bootstrap/Form";
 import { accounts, months, transactionTypes } from "../utils/Constants";
 import { file, rupee } from "../utils/icons";
 import { useFormik } from "formik";
-import { Button } from "react-bootstrap";
 import useValidation from "./useValidation";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setTransaction } from "../Store/slices/financeSlice";
+import { RootState } from "../Store";
 export interface transaction {
   transactionType: string;
   amount: string;
@@ -20,6 +20,7 @@ export interface transaction {
   fromAccount: string;
   tDate: string;
   notes: string;
+  [key: string]: string | number;
 }
 const Form = () => {
   //
@@ -45,7 +46,7 @@ const Form = () => {
   const [err, setErr] = useState(initialValues);
   const { validateField } = useValidation({ setErr });
   const dispatch = useDispatch();
-  const { transactions } = useSelector((state: any) => state.finance);
+  const { transactions } = useSelector((state: RootState) => state.finance);
 
   let currentUser: transaction = initialValues;
   const checkMode = () => {
@@ -73,7 +74,7 @@ const Form = () => {
     },
   });
 
-  const checkFormData = (values: any) => {
+  const checkFormData = (values: transaction) => {
     const tDate = validateField(
       values.tDate.length === 0,
       "tDate",
@@ -138,7 +139,7 @@ const Form = () => {
   };
 
   const handleReceipt = (e: any) => {
-    const file = e.target.files[0];
+    const file: File = e.target.files[0];
     if (
       !(
         file.type.includes("png") ||
@@ -151,13 +152,13 @@ const Form = () => {
         receipt: "Type invalid, Only png,jpg and jpeg allowed",
       }));
     } else {
-      getBase64(file).then((base64: any) => {
-        values.receipt = base64;
+      getBase64(file).then((base64) => {
+        values.receipt = base64 as string;
       });
     }
   };
 
-  const getBase64 = (file: any) => {
+  const getBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -492,9 +493,12 @@ const Form = () => {
               </FloatingLabel>
             </div>
 
-            <Button variant="primary" type="submit">
+            {/* <Button variant="primary" type="submit">
               {id ? "Update" : "Add"}
-            </Button>
+            </Button> */}
+            <button type="submit" className="custom-btn btn-save">
+              {id ? "Update" : "Add"}
+            </button>
           </form>
         </div>
       </div>
