@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { FloatingLabel, Form } from "react-bootstrap";
 import { columnTitles } from "../utils/Constants";
 
 const GroupBy = ({ transaction, setT }: any) => {
@@ -22,8 +22,10 @@ const GroupBy = ({ transaction, setT }: any) => {
   };
 
   const [flag, setFlag] = useState(false);
+  const [selected, setSelected] = useState("DEFAULT");
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+    setSelected(event.target.value);
     const field = event.target.value;
     const cloneData: DataItem[] = transaction && [...transaction];
     const groupedData: GroupedData = {};
@@ -34,6 +36,7 @@ const GroupBy = ({ transaction, setT }: any) => {
       setFlag(true);
       return groupedData;
     });
+    setT(groupedData);
     /*
     let tempData = cloneData.reduce((group: GroupedData, item: DataItem) => {
       const category = item[field];
@@ -42,7 +45,6 @@ const GroupBy = ({ transaction, setT }: any) => {
       return group;
     }, {});
     */
-    setT(groupedData);
   };
 
   function handleResetGroupBy(
@@ -50,31 +52,36 @@ const GroupBy = ({ transaction, setT }: any) => {
   ): void {
     setT(transaction);
     setFlag(false);
+    setSelected("DEFAULT");
   }
 
   return (
     <div className="container main">
       <FloatingLabel label="Group By field" className="my-2">
-        <Form.Select
-          name="groupBy"
-          defaultValue={"DEFAULT"}
-          onChange={handleChange}
-        >
+        <Form.Select name="groupBy" onChange={handleChange} value={selected}>
           <option value={"DEFAULT"} disabled hidden>
             Select a Field
           </option>
           {columnTitles.map((t) => {
             return (
-              <option key={t.id} value={t.label}>
-                {t.title}
-              </option>
+              t.label !== "receipt" && (
+                <option key={t.id} value={t.label}>
+                  {t.title}
+                </option>
+              )
             );
           })}
         </Form.Select>
       </FloatingLabel>
       {flag && (
         <div>
-          <Button onClick={handleResetGroupBy}>Reset Group By</Button>
+          {/* <Button onClick={handleResetGroupBy}>Reset Group By</Button> */}
+          <button
+            className="custom-btn btn-save my-3 px-4"
+            onClick={handleResetGroupBy}
+          >
+            Reset Group By
+          </button>
         </div>
       )}
     </div>

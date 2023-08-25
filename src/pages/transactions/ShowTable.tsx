@@ -4,7 +4,7 @@ import { edit, plus, show, trash } from "../../utils/icons";
 import { Link } from "react-router-dom";
 import DeleteTransaction from "./DeleteTransaction";
 import Paginated from "../../others/Pagination";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const ShowTable = ({ title, sort, arr }: any) => {
   //
@@ -116,10 +116,17 @@ const ShowTable = ({ title, sort, arr }: any) => {
           </>
         ) : (
           <Link to="/add">
-            <Button variant="primary" className="text-light fw-bold">
+            {/* <Button variant="primary" className="text-light fw-bold">
               <span>{plus}</span>
               <span>Add Transaction</span>
-            </Button>
+            </Button> */}
+            <button
+              type="submit"
+              className="custom-btn btn-save my-3 px-4 text-light fw-bold"
+            >
+              <span>{plus}</span>
+              <span>Add Transaction</span>
+            </button>
           </Link>
         )}
       </div>

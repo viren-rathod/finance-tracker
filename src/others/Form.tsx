@@ -139,7 +139,7 @@ const Form = () => {
   };
 
   const handleReceipt = (e: any) => {
-    const file: File = e.target.files[0];
+    const file = e.target.files[0];
     if (
       !(
         file.type.includes("png") ||
@@ -152,13 +152,13 @@ const Form = () => {
         receipt: "Type invalid, Only png,jpg and jpeg allowed",
       }));
     } else {
-      getBase64(file).then((base64) => {
-        values.receipt = base64 as string;
+      getBase64(file).then((base64: any) => {
+        values.receipt = base64;
       });
     }
   };
 
-  const getBase64 = (file: File) => {
+  const getBase64 = (file: any) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -191,7 +191,7 @@ const Form = () => {
     <div className="bg-body-secondary" style={{ height: "100vh" }}>
       <div className="main container">
         <div className="form-div w-50 my-0 mx-auto">
-          <h1 className="text-center">Add Transaction</h1>
+          <h1 className="text-center">{id ? "Update" : "Make"} Transaction</h1>
 
           <form onSubmit={handleSubmit}>
             {/* Transaction Date */}

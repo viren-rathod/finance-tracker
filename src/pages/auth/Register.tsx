@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../../validations";
 
@@ -88,13 +88,16 @@ const Register = () => {
             <p className="text-danger m-0">{errors.password}</p>
           ) : null}
         </Form.Group>
-        <Button
+        {/* <Button
           variant="primary"
           className="my-3 px-4 py-2 w-0 fs-6"
           type="submit"
         >
           Submit
-        </Button>
+        </Button> */}
+        <button type="submit" className="custom-btn btn-save my-3 px-4">
+          Submit
+        </button>
         <p>
           Already have an Account ?<Link to="/login"> Login </Link>
         </p>
