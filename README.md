@@ -34,3 +34,7 @@ Screens
 
 ### View Transaction
 ![Alt text](https://github.com/viren-rathod/finance-tracker/assets/127713305/1b9decf0-6ebf-4bc4-a5db-fb0be1b93917)
+
+### GroupBy Transactions
+![Screenshot from 2023-08-25 17-00-25](https://github.com/viren-rathod/finance-tracker/assets/127713305/f91add58-3d9b-40e7-8e3d-e4324122f788)
+
