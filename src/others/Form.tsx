@@ -47,14 +47,14 @@ const Form = () => {
   const { validateField } = useValidation({ setErr });
   const dispatch = useDispatch();
   const { transactions } = useSelector((state: RootState) => state.finance);
+  const [val, setVal] = useState(initialValues);
 
   let currentUser: transaction = initialValues;
   const checkMode = () => {
     if (id) {
       const allData = transactions;
       currentUser =
-        allData.find((user: typeof initialValues) => user.key === id) ??
-        initialValues;
+        allData.find((user: transaction) => user.key === id) ?? initialValues;
     }
   };
 
@@ -64,7 +64,7 @@ const Form = () => {
   }, [checkMode()]);
 
   let { values, handleBlur, handleChange, handleSubmit, touched } = useFormik({
-    initialValues: id ? currentUser : initialValues,
+    initialValues: id ? currentUser : val,
     validationSchema: "",
     onSubmit: () => {
       const isFormValid = checkFormData(values);
@@ -112,7 +112,7 @@ const Form = () => {
     );
 
     const receipt = validateField(
-      values.receipt.length === 0,
+      val.receipt.length === 0,
       "receipt",
       "Please select Receipt!"
     );
@@ -153,7 +153,7 @@ const Form = () => {
       }));
     } else {
       getBase64(file).then((base64: any) => {
-        values.receipt = base64;
+        setVal({ ...values, receipt: base64 });
       });
     }
   };
@@ -167,12 +167,12 @@ const Form = () => {
     });
   };
 
-  const submitHandler = (values: typeof initialValues) => {
+  const submitHandler = (values: transaction) => {
     /* Form Submit */
     const uniqueId = new Date().getTime();
-    let allData: (typeof newTransaction)[] = [];
+    let allData: transaction[] = [];
     allData = transactions;
-    let newTransaction = { ...values, key: uniqueId };
+    let newTransaction = { ...values, receipt: val.receipt, key: uniqueId };
     if (id) {
       allData = allData.map((data) => {
         if (data.key === parseInt(id)) {
@@ -429,15 +429,15 @@ const Form = () => {
             {/* Receipt */}
             <div className="mb-4 mt-3">
               <form.Control.Feedback type="invalid" className="d-block">
-                {values.receipt.length !== 0 ? "" : err.receipt}
+                {val.receipt.length !== 0 ? "" : err.receipt}
               </form.Control.Feedback>
               <div
                 className={
                   (touched.receipt
-                    ? values.receipt.length !== 0
+                    ? val.receipt.length !== 0
                       ? "is-valid "
                       : "is-invalid "
-                    : values.receipt.length !== 0
+                    : val.receipt.length !== 0
                     ? "is-valid "
                     : " ") +
                   "d-flex justify-content-center align-items-center form-control p-0 mb-4 shadow-sm rounded"
@@ -450,10 +450,10 @@ const Form = () => {
                     placeholder="Receipt"
                     className={
                       (touched.receipt
-                        ? values.receipt.length !== 0
+                        ? val.receipt.length !== 0
                           ? "is-valid "
                           : "is-invalid "
-                        : values.receipt.length !== 0
+                        : val.receipt.length !== 0
                         ? "is-valid "
                         : " ") + " border-0 p-3"
                     }
@@ -465,6 +465,7 @@ const Form = () => {
                 </span>
               </div>
             </div>
+            {/* <img src={val.receipt} alt="" /> */}
 
             <div className="mb-4 mt-3">
               <form.Control.Feedback type="invalid" className="d-block">
