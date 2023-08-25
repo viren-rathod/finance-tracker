@@ -1,46 +1,36 @@
-# Getting Started with Create React App
+# Finance Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Finance Tracker is a TypeScript-based project that aims to help users manage their financial transactions effectively. It utilizes the local storage feature to store transaction data locally. The project provides a user-friendly interface with various screens for adding, updating, viewing, and analyzing transactions. Additionally, it offers features such as grouping transactions and user authentication through login and registration.
+Screens
 
-## Available Scripts
+## The project consists of the following screens:
 
-In the project directory, you can run:
+    Add Transaction / Update Transaction: This screen allows users to add new transactions or update existing ones. However, the update functionality is only available after completing the rest of the screens.
 
-### `npm start`
+    All Transactions: This screen displays all the transactions stored in the system. Users can view and manage their transactions from this screen.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    View Transaction: This screen provides detailed information about a specific transaction. Users can access this screen to get a closer look at a particular transaction.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Functionality
 
-### `npm test`
+### The Finance Tracker project offers the following functionalities:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Add / Update Transaction: Users can add new financial transactions to the system or update existing transactions. The data is stored locally using the local storage feature.
 
-### `npm run build`
+    Display all Transactions: Users can view a comprehensive list of all the transactions stored in the system. This screen allows them to manage and organize their financial data effectively.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    View Transactions: Users can access detailed information about specific transactions using this functionality. It provides a closer look at individual transactions, including date, description, amount, and any additional relevant details.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    Groupby Transactions: This feature allows users to group their transactions based on specific criteria. It can help them analyze their financial data and gain insights into their spending patterns.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    Login/Register: The project incorporates user authentication through login and registration. Users can create an account and securely log in to access their financial data.
 
-### `npm run eject`
+## Screens
+### All Transactions
+![All Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/3049750c-4c93-421f-b163-56730a05e03d)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Add Transactions
+![Alt text](https://github.com/viren-rathod/finance-tracker/assets/127713305/f3ab28b9-2788-4679-8bf0-5d55c47ccb67)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### View Transaction
+![Alt text](https://github.com/viren-rathod/finance-tracker/assets/127713305/1b9decf0-6ebf-4bc4-a5db-fb0be1b93917)
