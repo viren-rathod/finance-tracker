@@ -23,10 +23,9 @@ const GroupBy = ({ transaction, setT }: any) => {
 
   const [flag, setFlag] = useState(false);
   const [selected, setSelected] = useState("DEFAULT");
-
   const handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
-    setSelected(event.target.value);
     const field = event.target.value;
+    setSelected(field);
     const cloneData: DataItem[] = transaction && [...transaction];
     const groupedData: GroupedData = {};
     cloneData.map((item) => {
@@ -36,7 +35,6 @@ const GroupBy = ({ transaction, setT }: any) => {
       setFlag(true);
       return groupedData;
     });
-    setT(groupedData);
     /*
     let tempData = cloneData.reduce((group: GroupedData, item: DataItem) => {
       const category = item[field];
@@ -45,6 +43,7 @@ const GroupBy = ({ transaction, setT }: any) => {
       return group;
     }, {});
     */
+    setT(groupedData);
   };
 
   function handleResetGroupBy(
@@ -57,29 +56,25 @@ const GroupBy = ({ transaction, setT }: any) => {
 
   return (
     <div className="container main">
-      <FloatingLabel label="Group By field" className="my-2">
-        <Form.Select name="groupBy" onChange={handleChange} value={selected}>
-          <option value={"DEFAULT"} disabled hidden>
-            Select a Field
-          </option>
-          {columnTitles.map((t) => {
-            return (
-              t.label !== "receipt" && (
+      {transaction?.length > 0 && (
+        <FloatingLabel label="Group By field" className="my-2">
+          <Form.Select name="groupBy" value={selected} onChange={handleChange}>
+            <option value={"DEFAULT"} disabled hidden>
+              Select a Field
+            </option>
+            {columnTitles.map((t) => {
+              return (
                 <option key={t.id} value={t.label}>
                   {t.title}
                 </option>
-              )
-            );
-          })}
-        </Form.Select>
-      </FloatingLabel>
+              );
+            })}
+          </Form.Select>
+        </FloatingLabel>
+      )}
       {flag && (
         <div>
-          {/* <Button onClick={handleResetGroupBy}>Reset Group By</Button> */}
-          <button
-            className="custom-btn btn-save my-3 px-4"
-            onClick={handleResetGroupBy}
-          >
+          <button onClick={handleResetGroupBy} className="custom-btn btn-save">
             Reset Group By
           </button>
         </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import form from "react-bootstrap/Form";
 import { accounts, months, transactionTypes } from "../utils/Constants";
-import { file, rupee } from "../utils/icons";
+import { file, rupee, trash } from "../utils/icons";
 import { useFormik } from "formik";
 import useValidation from "./useValidation";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ export interface transaction {
   notes: string;
   [key: string]: string | number;
 }
+const MAX_SIZE = 1024 * 1024;
 const Form = () => {
   //
   const user = localStorage.getItem("activeUser");
@@ -47,7 +48,6 @@ const Form = () => {
   const { validateField } = useValidation({ setErr });
   const dispatch = useDispatch();
   const { transactions } = useSelector((state: RootState) => state.finance);
-  const [val, setVal] = useState(initialValues);
 
   let currentUser: transaction = initialValues;
   const checkMode = () => {
@@ -63,16 +63,17 @@ const Form = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkMode()]);
 
-  let { values, handleBlur, handleChange, handleSubmit, touched } = useFormik({
-    initialValues: id ? currentUser : val,
-    validationSchema: "",
-    onSubmit: () => {
-      const isFormValid = checkFormData(values);
-      if (isFormValid) {
-        submitHandler(values);
-      }
-    },
-  });
+  let { values, setValues, handleBlur, handleChange, handleSubmit, touched } =
+    useFormik({
+      initialValues: id ? currentUser : initialValues,
+      validationSchema: "",
+      onSubmit: () => {
+        const isFormValid = checkFormData(values);
+        if (isFormValid) {
+          submitHandler(values);
+        }
+      },
+    });
 
   const checkFormData = (values: transaction) => {
     const tDate = validateField(
@@ -112,7 +113,7 @@ const Form = () => {
     );
 
     const receipt = validateField(
-      val.receipt.length === 0,
+      values.receipt.length === 0,
       "receipt",
       "Please select Receipt!"
     );
@@ -139,7 +140,7 @@ const Form = () => {
   };
 
   const handleReceipt = (e: any) => {
-    const file = e.target.files[0];
+    const file: File = e.target.files[0];
     if (
       !(
         file.type.includes("png") ||
@@ -151,11 +152,20 @@ const Form = () => {
         ...err,
         receipt: "Type invalid, Only png,jpg and jpeg allowed",
       }));
+    } else if (file.size > MAX_SIZE) {
+      setErr((err) => ({
+        ...err,
+        receipt: "File size should be less than 1MB!!",
+      }));
     } else {
       getBase64(file).then((base64: any) => {
-        setVal({ ...values, receipt: base64 });
+        setValues({ ...values, receipt: base64 });
       });
     }
+  };
+
+  const removeImage = () => {
+    setValues({ ...values, receipt: "" });
   };
 
   const getBase64 = (file: any) => {
@@ -172,7 +182,7 @@ const Form = () => {
     const uniqueId = new Date().getTime();
     let allData: transaction[] = [];
     allData = transactions;
-    let newTransaction = { ...values, receipt: val.receipt, key: uniqueId };
+    let newTransaction = { ...values, receipt: values.receipt, key: uniqueId };
     if (id) {
       allData = allData.map((data) => {
         if (data.key === parseInt(id)) {
@@ -429,15 +439,15 @@ const Form = () => {
             {/* Receipt */}
             <div className="mb-4 mt-3">
               <form.Control.Feedback type="invalid" className="d-block">
-                {val.receipt.length !== 0 ? "" : err.receipt}
+                {values.receipt.length !== 0 ? "" : err.receipt}
               </form.Control.Feedback>
               <div
                 className={
                   (touched.receipt
-                    ? val.receipt.length !== 0
+                    ? values.receipt.length !== 0
                       ? "is-valid "
                       : "is-invalid "
-                    : val.receipt.length !== 0
+                    : values.receipt.length !== 0
                     ? "is-valid "
                     : " ") +
                   "d-flex justify-content-center align-items-center form-control p-0 mb-4 shadow-sm rounded"
@@ -448,12 +458,13 @@ const Form = () => {
                   <form.Control
                     type="file"
                     placeholder="Receipt"
+                    accept="image/png, image/jpeg, image/jpg"
                     className={
                       (touched.receipt
-                        ? val.receipt.length !== 0
+                        ? values.receipt.length !== 0
                           ? "is-valid "
                           : "is-invalid "
-                        : val.receipt.length !== 0
+                        : values.receipt.length !== 0
                         ? "is-valid "
                         : " ") + " border-0 p-3"
                     }
@@ -465,7 +476,27 @@ const Form = () => {
                 </span>
               </div>
             </div>
-            {/* <img src={val.receipt} alt="" /> */}
+            {values.receipt && (
+              <>
+                <img
+                  src={values.receipt}
+                  alt=""
+                  style={{ width: "200px", height: "150px" }}
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    bottom: "60px",
+                    right: "25px",
+                    cursor: "pointer",
+                    color: "#0d6efd",
+                  }}
+                  onClick={removeImage}
+                >
+                  {trash}
+                </span>
+              </>
+            )}
 
             <div className="mb-4 mt-3">
               <form.Control.Feedback type="invalid" className="d-block">

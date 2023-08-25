@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 const Modals = ({
   setShowModal,
@@ -28,16 +28,16 @@ const Modals = ({
         </Modal.Header>
         <Modal.Body>{message}</Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
+          <button
             autoFocus
             onClick={() => setShowModal(false)}
+            className="custom-btn btn-save"
           >
             {NoBtn ? NoBtn : "No"}
-          </Button>
-          <Button variant="primary" onClick={onClick}>
+          </button>
+          <button onClick={onClick} className="custom-btn btn-save">
             {YesBtn}
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

@@ -66,8 +66,8 @@ const NavBar = () => {
           icon={warn}
           message={"Are you sure you want to Logout of the Application?"}
           onClick={handleLogout}
-          YesBtn={"Yes,Logout!"}
-          NoBtn={"No, Stay Signedin!"}
+          YesBtn={"Yes"}
+          NoBtn={"No"}
         />
       }
     </>
