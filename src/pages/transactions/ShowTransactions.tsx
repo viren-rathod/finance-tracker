@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../../others/NavBar";
 import ShowData from "./ShowData";
 import GroupBy from "../../others/GroupBy";
@@ -15,6 +15,10 @@ const ShowTransactions = () => {
   );
 
   const [transaction, setT] = useState(oldTransactions);
+  useEffect(() => {
+    setT(oldTransactions);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transactions]);
 
   return (
     <>

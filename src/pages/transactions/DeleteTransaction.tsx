@@ -1,9 +1,15 @@
 import React from "react";
 import { danger } from "../../utils/icons";
 import Modals from "../../others/Modal";
+import { useDispatch } from "react-redux";
+import { deleteTransaction } from "../../Store/slices/financeSlice";
 
 const DeleteTransaction = ({ setShowModal, showModal, id }: any) => {
-  const handleDelete = () => {};
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteTransaction(id));
+    setShowModal(false);
+  };
 
   return (
     <Modals

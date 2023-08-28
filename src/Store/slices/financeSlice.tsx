@@ -9,7 +9,13 @@ const financeSlice = createSlice({
   reducers: {
     setTransaction: (state, action) =>
       void (state.transactions = action.payload),
+    deleteTransaction: (state, action) => {
+      const transactionIdToDelete = action.payload;
+      state.transactions = state.transactions.filter(
+        (transaction) => transaction.key !== transactionIdToDelete
+      );
+    },
   },
 });
-export const { setTransaction } = financeSlice.actions;
+export const { setTransaction,deleteTransaction } = financeSlice.actions;
 export default financeSlice.reducer;

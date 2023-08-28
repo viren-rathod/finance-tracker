@@ -34,7 +34,7 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
   };
   return (
     <>
-      {Array.isArray(transaction) && (
+      {transaction?.length > 0 && Array.isArray(transaction) && (
         <ShowTable sort={sort} arr={tempData} sortMethod={sortMethod} />
       )}
       {transaction &&
