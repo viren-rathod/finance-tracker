@@ -29,13 +29,14 @@ The Finance Tracker project offers the following functionalities:
 ## Screens
 
 ### All Transactions
-![All Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/f1a1c40b-4e77-461a-8b8e-c4d821806666)
+![All Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/c8afb4aa-85f8-4375-83ac-58d4c2b6d995)
 
 ### Add Transactions
-![Add Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/30e35bdd-eb4d-43c5-9c9d-a766e28f5a86)
+![Add Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/f961b5b3-6424-4dae-9afb-edb7d084763c)
 
 ### View Transaction
-![View Transaction](https://github.com/viren-rathod/finance-tracker/assets/127713305/9af3204e-234d-4deb-bb39-e26912734e27)
+![View Transaction](https://github.com/viren-rathod/finance-tracker/assets/127713305/efe6b2b0-ee56-4c61-aa84-83b35aa11f29)
 
 ### GroupBy Transactions
-![GroupBy Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/441e125f-19fb-481f-9769-0272a3ecdff7)
+![GroupBy Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/3ed550ab-5088-48ed-8aa2-802ebb87b784)
+
