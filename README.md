@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+# Finance Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Finance Tracker is a React-based project developed using TypeScript and Redux Toolkit. It provides users with a comprehensive solution to track and manage their financial transactions effectively. The project includes various screens for adding, updating, viewing, and organizing transactions. Additionally, it offers features such as grouping transactions and user authentication through login and registration.
 
-## Available Scripts
+## Screens
 
-In the project directory, you can run:
+The project consists of the following screens:
 
-### `npm start`
+1. **Add Transaction / Update Transaction**: This screen allows users to add new transactions or update existing ones. Please note that the update functionality is only available after completing the rest of the screens.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. **All Transactions**: This screen displays all the transactions stored in the system. Users can view, manage, and organize their transactions from this screen.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. **View Transaction**: This screen provides detailed information about a specific transaction. Users can access this screen to examine a particular transaction closely.
 
-### `npm test`
+## Functionality
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The Finance Tracker project offers the following functionalities:
 
-### `npm run build`
+1. **Add / Update Transaction**: Users can add new financial transactions to the system or update existing transactions. These transactions are stored and managed using Redux Toolkit, providing a centralized and efficient state management solution.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Display all Transactions**: Users can view a comprehensive list of all the transactions stored in the system. This screen allows them to manage and organize their financial data effectively.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **View Transactions**: Users can access detailed information about specific transactions using this functionality. It provides a closer look at individual transactions, including date, description, amount, and any additional relevant details.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Groupby Transactions**: This feature allows users to group their transactions based on specific criteria. It can help them analyze their financial data and gain insights into their spending patterns. Redux Toolkit facilitates efficient data manipulation and grouping operations.
 
-### `npm run eject`
+1. **Login/Register**: The project incorporates user authentication through login and registration. Users can create an account, securely log in, and access their financial data with personalized settings.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Screens
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### All Transactions
+![All Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/f1a1c40b-4e77-461a-8b8e-c4d821806666)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Add Transactions
+![Add Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/30e35bdd-eb4d-43c5-9c9d-a766e28f5a86)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### View Transaction
+![View Transaction](https://github.com/viren-rathod/finance-tracker/assets/127713305/9af3204e-234d-4deb-bb39-e26912734e27)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### GroupBy Transactions
+![GroupBy Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/441e125f-19fb-481f-9769-0272a3ecdff7)
