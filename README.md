@@ -26,15 +26,16 @@ Screens
     Login/Register: The project incorporates user authentication through login and registration. Users can create an account and securely log in to access their financial data.
 
 ## Screens
+
 ### All Transactions
-![All Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/3049750c-4c93-421f-b163-56730a05e03d)
+![All Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/c8afb4aa-85f8-4375-83ac-58d4c2b6d995)
 
 ### Add Transactions
-![Alt text](https://github.com/viren-rathod/finance-tracker/assets/127713305/f3ab28b9-2788-4679-8bf0-5d55c47ccb67)
+![Add Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/f961b5b3-6424-4dae-9afb-edb7d084763c)
 
 ### View Transaction
-![Alt text](https://github.com/viren-rathod/finance-tracker/assets/127713305/1b9decf0-6ebf-4bc4-a5db-fb0be1b93917)
+![View Transaction](https://github.com/viren-rathod/finance-tracker/assets/127713305/efe6b2b0-ee56-4c61-aa84-83b35aa11f29)
 
 ### GroupBy Transactions
-![Screenshot from 2023-08-25 17-00-25](https://github.com/viren-rathod/finance-tracker/assets/127713305/f91add58-3d9b-40e7-8e3d-e4324122f788)
+![GroupBy Transactions](https://github.com/viren-rathod/finance-tracker/assets/127713305/3ed550ab-5088-48ed-8aa2-802ebb87b784)
 
