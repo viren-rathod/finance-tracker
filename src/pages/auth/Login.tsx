@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { logInSchema } from "../../validations";
-import Modals from "../../others/Modal";
-import { danger } from "../../utils/icons";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,7 +11,6 @@ const Login = () => {
     email: "",
     password: "",
   };
-  // const [showModal, setShowModal] = useState(false);
 
   //Handling form submit event
   const submitHandler = (v: typeof initialValues) => {

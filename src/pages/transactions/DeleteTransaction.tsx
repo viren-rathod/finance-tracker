@@ -2,8 +2,37 @@ import React from "react";
 import { danger } from "../../utils/icons";
 import Modals from "../../others/Modal";
 
-const DeleteTransaction = ({ setShowModal, showModal, id }: any) => {
-  const handleDelete = () => {};
+export interface transaction {
+  tDate: string;
+  monthYear: string;
+  transactionType: string;
+  fromAccount: string;
+  toAccount: string;
+  amount: string;
+  receipt: string;
+  notes: string;
+  user: string;
+  key: number;
+}
+const DeleteTransaction = ({
+  setShowModal,
+  showModal,
+  id,
+  setTempData,
+}: any) => {
+  const handleDelete = () => {
+    const user = localStorage.getItem("activeUser");
+    const userEmail: string = JSON.parse(user || "{}").email;
+    let allData: transaction[] = [];
+    allData = JSON.parse(localStorage.getItem("transactions") || "[]");
+    allData = allData.filter(
+      (item) => item.key !== id && item.user === userEmail
+    );
+    console.log(allData);
+    localStorage.setItem("transactions", JSON.stringify(allData));
+    setTempData(allData);
+    setShowModal(false);
+  };
 
   return (
     <Modals
