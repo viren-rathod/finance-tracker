@@ -6,7 +6,7 @@ import DeleteTransaction from "./DeleteTransaction";
 import Paginated from "../../others/Pagination";
 import { Button, Form } from "react-bootstrap";
 
-const ShowTable = ({ title, sort, arr }: any) => {
+const ShowTable = ({ title, sort, arr,setTempData }: any) => {
   //
   const [showModal, setShowModal] = useState(false);
   const [id, setId] = useState(null);
@@ -18,7 +18,7 @@ const ShowTable = ({ title, sort, arr }: any) => {
   const [pagination, setPagination] = useState({
     start: 0,
     currentPage: 1,
-    itemPerPage: 2,
+    itemPerPage: 3,
   });
   const lastItemIndex = pagination?.currentPage * pagination?.itemPerPage;
   const firstItemIndex = lastItemIndex - pagination?.itemPerPage;
@@ -130,6 +130,7 @@ const ShowTable = ({ title, sort, arr }: any) => {
           setShowModal={setShowModal}
           showModal={showModal}
           id={id}
+          setTempData={setTempData}
         />
       }
     </>

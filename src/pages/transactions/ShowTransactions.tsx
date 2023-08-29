@@ -9,14 +9,6 @@ const ShowTransactions = () => {
   const userEmail: string = JSON.parse(user || "{}").email;
   const [allTransactions] = useFinanceContext();
 
-  // let allTransactions = JSON.parse(
-  //   localStorage.getItem("transactions") || "[]"
-  // );
-  // let oldTransactions = allTransactions && [...allTransactions];
-  // oldTransactions = oldTransactions.filter(
-  //   (item: any) => item.user === userEmail
-  // );
-
   let oldTransactions = allTransactions && [...allTransactions];
   oldTransactions = oldTransactions.filter(
     (item: any) => item.user === userEmail

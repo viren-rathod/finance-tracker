@@ -1,9 +1,22 @@
 import React from "react";
 import { danger } from "../../utils/icons";
 import Modals from "../../others/Modal";
+import useFinanceContext from "../../Context/FinanceContext";
 
-const DeleteTransaction = ({ setShowModal, showModal, id }: any) => {
-  const handleDelete = () => {};
+const DeleteTransaction = ({
+  setShowModal,
+  showModal,
+  id,
+  setTempData,
+}: any) => {
+  const [transactions, setTransactions] = useFinanceContext();
+
+  const handleDelete = () => {
+    let updatedData = transactions.filter((item) => item.key !== id);
+    setTransactions(updatedData);
+    setTempData(updatedData);
+    setShowModal(false);
+  };
 
   return (
     <Modals

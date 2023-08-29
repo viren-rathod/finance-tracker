@@ -7,12 +7,11 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
 
   useEffect(() => {
     if (Array.isArray(transaction)) {
-      setTempData(transaction);
+      setTempData(oldTransactions);
     } else if (!Array.isArray(transaction)) {
       setTempData(oldTransactions);
     }
   }, [transaction, oldTransactions]);
-  // console.log("allTransactions", oldTransactions);
 
   const sort = (name: string, title: string) => {
     if (sortMethod > 2) {
@@ -36,7 +35,12 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
   return (
     <>
       {Array.isArray(transaction) && (
-        <ShowTable sort={sort} arr={tempData} sortMethod={sortMethod} />
+        <ShowTable
+          sort={sort}
+          arr={tempData}
+          sortMethod={sortMethod}
+          setTempData={setTempData}
+        />
       )}
       {transaction &&
         !Array.isArray(transaction) &&
@@ -48,6 +52,7 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
                 sort={sort}
                 arr={transaction[item]}
                 sortMethod={sortMethod}
+                setTempData={setTempData}
               />
             </div>
           );

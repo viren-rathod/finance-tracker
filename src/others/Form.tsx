@@ -33,12 +33,10 @@ const Form = () => {
   const [err, setErr] = useState(initialValues);
   const { validateField } = useValidation({ setErr });
   const [transactions, setTransactions] = useFinanceContext();
-  // console.log(transactions, setTransactions);
 
   let currentUser: transaction = initialValues;
 
   if (id) {
-    // const allData = JSON.parse(localStorage.getItem("transactions") || "[]");
     const allData = transactions;
     currentUser =
       allData.find((user: typeof initialValues) => user.key === parseInt(id)) ??
@@ -153,7 +151,6 @@ const Form = () => {
     /* Form Submit */
     const uniqueId = new Date().getTime();
     let allData: (typeof newTransaction)[] = [];
-    // allData = JSON.parse(localStorage.getItem("transactions") || "[]");
     allData = transactions;
     let newTransaction = { ...values, key: uniqueId };
     if (id) {
