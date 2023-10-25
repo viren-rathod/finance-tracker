@@ -4,17 +4,21 @@ import ShowData from "./ShowData";
 import GroupBy from "../../others/GroupBy";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store";
+import { transaction } from "../../others/Form";
 
+export type GroupedData = {
+  [key: string]: transaction[];
+};
 const ShowTransactions = () => {
   const user = localStorage.getItem("activeUser");
   const userEmail: string = JSON.parse(user || "{}").email;
   const { transactions } = useSelector((state: RootState) => state.finance);
   let oldTransactions = transactions && [...transactions];
-  oldTransactions = oldTransactions.filter(
-    (item: any) => item.user === userEmail
-  );
+  oldTransactions = oldTransactions.filter((item) => item.user === userEmail);
 
-  const [transaction, setT] = useState(oldTransactions);
+  const [transaction, setT] = useState<transaction[] | GroupedData>(
+    oldTransactions
+  );
   useEffect(() => {
     setT(oldTransactions);
     // eslint-disable-next-line react-hooks/exhaustive-deps

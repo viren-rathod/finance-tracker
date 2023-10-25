@@ -1,32 +1,20 @@
 import React, { ChangeEvent, useState } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { columnTitles } from "../utils/Constants";
+import { transaction } from "./Form";
+import { GroupedData } from "../pages/transactions/ShowTransactions";
 
-const GroupBy = ({ transaction, setT }: any) => {
-  interface DataItem {
-    tDate: string;
-    monthYear: string;
-    transactionType: string;
-    fromAccount: string;
-    toAccount: string;
-    amount: number;
-    receipt: string;
-    notes: string;
-    user: string;
-    key: number;
-    [key: string]: string | number;
-  }
-
-  type GroupedData = {
-    [key: string]: DataItem[];
-  };
-
+type GroupByProps = {
+  transaction: transaction[];
+  setT: React.Dispatch<React.SetStateAction<transaction[] | GroupedData>>;
+};
+const GroupBy = ({ transaction, setT }: GroupByProps) => {
   const [flag, setFlag] = useState(false);
   const [selected, setSelected] = useState("DEFAULT");
   const handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
     const field = event.target.value;
     setSelected(field);
-    const cloneData: DataItem[] = transaction && [...transaction];
+    const cloneData: transaction[] = transaction && [...transaction];
     const groupedData: GroupedData = {};
     cloneData.map((item) => {
       const category = item[field];
@@ -36,7 +24,7 @@ const GroupBy = ({ transaction, setT }: any) => {
       return groupedData;
     });
     /*
-    let tempData = cloneData.reduce((group: GroupedData, item: DataItem) => {
+    let tempData = cloneData.reduce((group: GroupedData, item: transaction) => {
       const category = item[field];
       group[category] = group[category] ?? [];
       group[category].push(item);

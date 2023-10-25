@@ -1,21 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { columnTitles } from "../../utils/Constants";
 import { edit, plus, show, trash } from "../../utils/icons";
 import { Link } from "react-router-dom";
 import DeleteTransaction from "./DeleteTransaction";
 import Paginated from "../../others/Pagination";
 import { Form } from "react-bootstrap";
+import { transaction } from "../../others/Form";
+import { GroupedData } from "./ShowTransactions";
 
-const ShowTable = ({ title, sort, arr }: any) => {
+export type PaginatonType = {
+  start: number;
+  currentPage: number;
+  itemPerPage: number;
+};
+type ShowTableType = {
+  title?: string;
+  sort: (name: string, title: string) => void;
+  arr: transaction[] | GroupedData;
+  sortMethod: number;
+};
+const ShowTable = ({ title, sort, arr }: ShowTableType) => {
   //
   const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState(null);
-  const handleDelete = (id: any) => {
+  const [id, setId] = useState<number | null>(null);
+  const handleDelete = (id: number) => {
     setId(id);
     setShowModal(true);
   };
 
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<PaginatonType>({
     start: 0,
     currentPage: 1,
     itemPerPage: 3,
@@ -23,18 +36,18 @@ const ShowTable = ({ title, sort, arr }: any) => {
   const lastItemIndex = pagination?.currentPage * pagination?.itemPerPage;
   const firstItemIndex = lastItemIndex - pagination?.itemPerPage;
 
-  const [myArr, setMyArr] = useState([{}]);
+  const [myArr, setMyArr] = useState<transaction[] | {}>([{}]);
 
   useEffect(() => {
-    if (arr.length) {
+    if (Array.isArray(arr) && arr.length) {
       setMyArr(arr.slice(firstItemIndex, lastItemIndex));
     }
   }, [arr, firstItemIndex, lastItemIndex]);
 
-  const handleLimitChange = (e: any) => {
+  const handleLimitChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setPagination({
       ...pagination,
-      itemPerPage: e.target.value,
+      itemPerPage: parseInt(e.target.value),
       currentPage: 1,
     });
   };
@@ -42,7 +55,9 @@ const ShowTable = ({ title, sort, arr }: any) => {
   return (
     <>
       <div className="container main">
-        {Object.keys(myArr[0]).length !== 0 ? (
+        {Array.isArray(myArr) &&
+        Object.keys(myArr[0]) &&
+        Object.keys(myArr[0]).length !== 0 ? (
           <>
             <h3>{title ? title : "All Transactions"}</h3>
             <table className="table table-hover">
@@ -50,7 +65,7 @@ const ShowTable = ({ title, sort, arr }: any) => {
                 <tr key={0}>
                   {columnTitles.map((t) => {
                     return (
-                      <th key={t.id} onClick={() => sort(t.label, title)}>
+                      <th key={t.id} onClick={() => sort(t.label, title + "")}>
                         {t.title}
                       </th>
                     );
@@ -61,7 +76,7 @@ const ShowTable = ({ title, sort, arr }: any) => {
                 </tr>
               </thead>
               <tbody className="table-group-divider">
-                {myArr.map((item: any, index: number) => {
+                {myArr.map((item, index) => {
                   return (
                     <tr key={index + 1}>
                       <td className="pt-5">{item.tDate}</td>
@@ -108,7 +123,7 @@ const ShowTable = ({ title, sort, arr }: any) => {
                 </Form.Select>
               </div>
               <Paginated
-                totalItem={arr.length}
+                totalItem={(Array.isArray(arr) && arr.length) || 0}
                 setPagination={setPagination}
                 pagination={pagination}
               />

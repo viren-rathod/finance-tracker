@@ -4,13 +4,14 @@ import NavBar from "../../others/NavBar";
 import { Card, ListGroup } from "react-bootstrap";
 import { goBack, rupee } from "../../utils/icons";
 import { useSelector } from "react-redux";
+import { RootState } from "../../Store";
 
 const TransactionInfo = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { transactions } = useSelector((state: any) => state.finance);
+  const { transactions } = useSelector((state: RootState) => state.finance);
   const [cardData] = transactions.filter(
-    (data: any) => parseInt(data.key) === parseInt(id || "")
+    (data) => data.key === parseInt(id || "")
   );
 
   return (

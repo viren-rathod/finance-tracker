@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ShowTable from "./ShowTable";
+import { transaction } from "../../others/Form";
+import { GroupedData } from "./ShowTransactions";
 
-const ShowData = ({ transaction, oldTransactions }: any) => {
-  const [tempData, setTempData] = useState([{}]);
+type ShowDataProps = {
+  transaction: transaction[] | GroupedData;
+  oldTransactions: transaction[];
+};
+const ShowData = ({ transaction, oldTransactions }: ShowDataProps) => {
+  const [tempData, setTempData] = useState<transaction[] | GroupedData>([]);
   const [sortMethod, setSortMethod] = useState(1);
 
   useEffect(() => {
@@ -19,9 +25,9 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
     } else {
       setSortMethod(sortMethod + 1);
     }
-    let cloneData = [];
+    let cloneData: transaction[] | GroupedData = [];
     if (!title) {
-      cloneData = [...transaction];
+      cloneData = Array.isArray(transaction) ? [...transaction] : [];
       if (sortMethod === 1) {
         cloneData = cloneData.sort((a, b) => (a[name] > b[name] ? 1 : -1));
       } else if (sortMethod === 2) {
@@ -34,7 +40,7 @@ const ShowData = ({ transaction, oldTransactions }: any) => {
   };
   return (
     <>
-      {transaction?.length > 0 && Array.isArray(transaction) && (
+      {Array.isArray(transaction) && transaction?.length > 0 && (
         <ShowTable sort={sort} arr={tempData} sortMethod={sortMethod} />
       )}
       {transaction &&

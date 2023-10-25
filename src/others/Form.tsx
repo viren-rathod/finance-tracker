@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import form from "react-bootstrap/Form";
 import { accounts, months, transactionTypes } from "../utils/Constants";
@@ -22,6 +22,19 @@ export interface transaction {
   notes: string;
   [key: string]: string | number;
 }
+
+export type ErrType = {
+  tDate: string;
+  monthYear: string;
+  transactionType: string;
+  fromAccount: string;
+  toAccount: string;
+  amount: string;
+  receipt: string;
+  notes: string;
+  user: string;
+  key: number;
+};
 const MAX_SIZE = 1024 * 1024;
 const Form = () => {
   //
@@ -44,7 +57,7 @@ const Form = () => {
     key: parseInt(""),
   };
 
-  const [err, setErr] = useState(initialValues);
+  const [err, setErr] = useState<ErrType>(initialValues);
   const { validateField } = useValidation({ setErr });
   const dispatch = useDispatch();
   const { transactions } = useSelector((state: RootState) => state.finance);
@@ -139,28 +152,30 @@ const Form = () => {
     return false;
   };
 
-  const handleReceipt = (e: any) => {
-    const file: File = e.target.files[0];
+  const handleReceipt = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files;
     if (
+      file &&
       !(
-        file.type.includes("png") ||
-        file.type.includes("jpg") ||
-        file.type.includes("jpeg")
+        file[0].name.includes("png") ||
+        file[0].name.includes("jpg") ||
+        file[0].name.includes("jpeg")
       )
     ) {
       setErr((err) => ({
         ...err,
         receipt: "Type invalid, Only png,jpg and jpeg allowed",
       }));
-    } else if (file.size > MAX_SIZE) {
+    } else if (file && file[0].size > MAX_SIZE) {
       setErr((err) => ({
         ...err,
         receipt: "File size should be less than 1MB!!",
       }));
     } else {
-      getBase64(file).then((base64: any) => {
-        setValues({ ...values, receipt: base64 });
-      });
+      file &&
+        getBase64(file[0]).then((base64) => {
+          setValues({ ...values, receipt: base64 as string });
+        });
     }
   };
 
@@ -168,7 +183,7 @@ const Form = () => {
     setValues({ ...values, receipt: "" });
   };
 
-  const getBase64 = (file: any) => {
+  const getBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);

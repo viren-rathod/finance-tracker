@@ -1,16 +1,26 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
+type ModalsProps = {
+  setShowModal: (e: boolean) => void;
+  showModal: boolean;
+  title: string;
+  icon: JSX.Element;
+  message: string;
+  onClick: () => void;
+  YesBtn?: string;
+  NoBtn?: string;
+};
 const Modals = ({
   setShowModal,
   showModal,
   title,
   icon,
   message,
-  onClick = setShowModal,
+  onClick,
   YesBtn,
   NoBtn,
-}: any) => {
+}: ModalsProps) => {
   return (
     <>
       <Modal

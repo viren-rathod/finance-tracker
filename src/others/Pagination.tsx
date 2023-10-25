@@ -1,7 +1,17 @@
 import React from "react";
 import Pagination from "react-bootstrap/Pagination";
+import { PaginatonType } from "../pages/transactions/ShowTable";
 
-const Paginated = ({ totalItem, setPagination, pagination }: any) => {
+type PaginatedProps = {
+  totalItem: number;
+  setPagination: React.Dispatch<React.SetStateAction<PaginatonType>>;
+  pagination: PaginatonType;
+};
+const Paginated = ({
+  totalItem,
+  setPagination,
+  pagination,
+}: PaginatedProps) => {
   let pages = [],
     currentPage = pagination?.currentPage,
     itemPerPage = pagination?.itemPerPage;

@@ -4,7 +4,16 @@ import Modals from "../../others/Modal";
 import { useDispatch } from "react-redux";
 import { deleteTransaction } from "../../Store/slices/financeSlice";
 
-const DeleteTransaction = ({ setShowModal, showModal, id }: any) => {
+type DeleteTransactionType = {
+  setShowModal: (e: boolean) => void;
+  showModal: boolean;
+  id: number | null;
+};
+const DeleteTransaction = ({
+  setShowModal,
+  showModal,
+  id,
+}: DeleteTransactionType) => {
   const dispatch = useDispatch();
   const handleDelete = () => {
     dispatch(deleteTransaction(id));

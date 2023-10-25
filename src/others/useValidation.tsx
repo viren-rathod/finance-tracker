@@ -1,24 +1,18 @@
-const useValidation = ({ setErr }: any) => {
+import { ErrType } from "./Form";
+
+type useValidationType = {
+  setErr: React.Dispatch<React.SetStateAction<ErrType>>;
+};
+
+const useValidation = ({ setErr }: useValidationType) => {
   const validateField = (condition: boolean, errName: string, msg: string) => {
     if (condition) {
-      setErr((err: any) => ({
+      setErr((err: ErrType) => ({
         ...err,
         [errName]: msg,
       }));
     } else {
-      setErr(
-        (err: {
-          tDate: string;
-          monthYear: string;
-          transactionType: string;
-          fromAccount: string;
-          toAccount: string;
-          amount: string;
-          receipt: string;
-          notes: string;
-          user: string;
-        }) => ({ ...err, [errName]: "" })
-      );
+      setErr((err: ErrType) => ({ ...err, [errName]: "" }));
       return true;
     }
     return false;
