@@ -1,4 +1,7 @@
-export const DATA = [
+import { transaction } from "../others/Form";
+import { RegisterType } from "../pages/auth/Register";
+
+export const DATA: transaction[] = [
   {
     transactionType: "Personal Expense",
     amount: "3445",
@@ -50,5 +53,14 @@ export const DATA = [
     fromAccount: "My Dream Home",
     tDate: "2023-03-30",
     notes: "BNMBNGJBJBJHGJFBHGDFJBJH",
+  },
+];
+
+export const USER: RegisterType[] = [
+  {
+    id: 1,
+    email: "viren3@mail.com",
+    password: "123",
+    username: "Viren3",
   },
 ];

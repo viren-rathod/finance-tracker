@@ -3,21 +3,29 @@ import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { logInSchema } from "../../validations";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store";
+import { RegisterType } from "./Register";
+
+export interface LoginType {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const initialValues = {
+  const initialValues: LoginType = {
     email: "",
     password: "",
   };
 
   //Handling form submit event
-  const submitHandler = (v: typeof initialValues) => {
-    const allData = JSON.parse(localStorage.getItem("usersData") || "[]");
-    const currentUser: (typeof initialValues)[] = allData?.filter(
-      (user: typeof initialValues) =>
-        user.email === v?.email && user.password === v?.password
+  const allData = useSelector((state: RootState) => state.user);
+
+  const submitHandler = (val: LoginType) => {
+    const currentUser: RegisterType[] = allData.user?.filter(
+      (user: LoginType) =>
+        user.email === val?.email && user.password === val?.password
     );
     if (currentUser?.length > 0) {
       localStorage.setItem("activeUser", JSON.stringify(currentUser[0]));

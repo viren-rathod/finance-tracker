@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { DATA } from "../../utils/data";
+import { transaction } from "../../others/Form";
 
 const financeSlice = createSlice({
   name: "Transactions",
@@ -7,9 +8,9 @@ const financeSlice = createSlice({
     transactions: DATA,
   },
   reducers: {
-    setTransaction: (state, action) =>
+    setTransaction: (state, action: PayloadAction<transaction[]>):void =>
       void (state.transactions = action.payload),
-    deleteTransaction: (state, action) => {
+    deleteTransaction: (state, action: PayloadAction<number>) => {
       const transactionIdToDelete = action.payload;
       state.transactions = state.transactions.filter(
         (transaction) => transaction.key !== transactionIdToDelete
@@ -17,5 +18,5 @@ const financeSlice = createSlice({
     },
   },
 });
-export const { setTransaction,deleteTransaction } = financeSlice.actions;
+export const { setTransaction, deleteTransaction } = financeSlice.actions;
 export default financeSlice.reducer;

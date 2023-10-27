@@ -7,7 +7,7 @@ import { deleteTransaction } from "../../Store/slices/financeSlice";
 type DeleteTransactionType = {
   setShowModal: (e: boolean) => void;
   showModal: boolean;
-  id: number | null;
+  id: number;
 };
 const DeleteTransaction = ({
   setShowModal,

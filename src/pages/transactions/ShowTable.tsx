@@ -22,7 +22,7 @@ type ShowTableType = {
 const ShowTable = ({ title, sort, arr }: ShowTableType) => {
   //
   const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState<number | null>(null);
+  const [id, setId] = useState(parseInt(" "));
   const handleDelete = (id: number) => {
     setId(id);
     setShowModal(true);
@@ -84,7 +84,7 @@ const ShowTable = ({ title, sort, arr }: ShowTableType) => {
                       <td className="pt-5">{item.transactionType}</td>
                       <td className="pt-5">{item.fromAccount}</td>
                       <td className="pt-5">{item.toAccount}</td>
-                      <td className="pt-5">{item.amount}</td>
+                      <td className="pt-5">₹ {item.amount}</td>
                       <td>
                         <img src={item.receipt} alt="" />
                       </td>

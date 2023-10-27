@@ -3,11 +3,23 @@ import { useFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../../validations";
+import { addUser } from "../../Store/slices/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Store";
+import { useDispatch } from "react-redux";
+
+export interface RegisterType {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+}
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const initialValues = {
+  const initialValues: RegisterType = {
     id: 0,
     username: "",
     email: "",
@@ -15,13 +27,11 @@ const Register = () => {
   };
 
   //Handling form submit event
-  const submitHandler = (v: typeof initialValues) => {
-    let allData: (typeof initialValues)[] = [];
-    if (JSON.parse(localStorage.getItem("usersData") || "[]"))
-      allData = JSON.parse(localStorage.getItem("usersData") || "[]");
+  let allData = useSelector((state: RootState) => state.user.user);
+  const submitHandler = (v: RegisterType) => {
+    console.log(allData);
     v.id = allData.length + 1;
-    allData.push(v);
-    localStorage.setItem("usersData", JSON.stringify(allData));
+    dispatch(addUser(v));
     alert("Register Successfully!\nNow Log In !!");
     navigate("/login");
   };
