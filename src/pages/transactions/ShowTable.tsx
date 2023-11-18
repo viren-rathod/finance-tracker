@@ -14,8 +14,8 @@ export type PaginatonType = {
   itemPerPage: number;
 };
 type ShowTableType = {
-  title?: string;
-  sort: (name: string, title: string) => void;
+  title?: string | undefined;
+  sort: (name: string, title: string | undefined) => void;
   arr: transaction[] | GroupedData;
   sortMethod: number;
 };
@@ -65,7 +65,7 @@ const ShowTable = ({ title, sort, arr }: ShowTableType) => {
                 <tr key={0}>
                   {columnTitles.map((t) => {
                     return (
-                      <th key={t.id} onClick={() => sort(t.label, title + "")}>
+                      <th key={t.id} onClick={() => sort(t.label, title)}>
                         {t.title}
                       </th>
                     );

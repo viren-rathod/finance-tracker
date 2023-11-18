@@ -8,35 +8,49 @@ type ShowDataProps = {
   oldTransactions: transaction[];
 };
 const ShowData = ({ transaction, oldTransactions }: ShowDataProps) => {
-  const [tempData, setTempData] = useState<transaction[] | GroupedData>([]);
+  const [tempData, setTempData] = useState<transaction[]>([]);
+  const [tempObjData, setTempObjData] = useState<GroupedData>({});
   const [sortMethod, setSortMethod] = useState(1);
 
   useEffect(() => {
     if (Array.isArray(transaction)) {
       setTempData(transaction);
     } else if (!Array.isArray(transaction)) {
-      setTempData(oldTransactions);
+      setTempObjData(transaction);
     }
   }, [transaction, oldTransactions]);
-
-  const sort = (name: string, title: string) => {
+  const sort = (name: string, title: string | undefined) => {
     if (sortMethod > 2) {
       setSortMethod(1);
     } else {
       setSortMethod(sortMethod + 1);
     }
-    let cloneData: transaction[] | GroupedData = [];
+    let arrayData: transaction[];
+    let objData: GroupedData;
     if (!title) {
-      cloneData = Array.isArray(transaction) ? [...transaction] : [];
+      arrayData = Array.isArray(transaction) ? [...transaction] : [];
       if (sortMethod === 1) {
-        cloneData = cloneData.sort((a, b) => (a[name] > b[name] ? 1 : -1));
+        arrayData = arrayData.sort((a, b) => (a[name] > b[name] ? 1 : -1));
       } else if (sortMethod === 2) {
-        cloneData = cloneData.sort((a, b) => (a[name] < b[name] ? 1 : -1));
+        arrayData = arrayData.sort((a, b) => (a[name] < b[name] ? 1 : -1));
       }
+      setTempData(arrayData);
     } else {
-      cloneData = { ...transaction };
+      objData = !Array.isArray(transaction) ? transaction : {};
+      let dataToSort = objData[title];
+      let sortedData: transaction[] = [];
+      if (sortMethod === 1) {
+        sortedData = [...dataToSort].sort((a, b) =>
+          a[name] > b[name] ? 1 : -1
+        );
+      } else if (sortMethod === 2) {
+        sortedData = [...dataToSort].sort((a, b) =>
+          a[name] < b[name] ? 1 : -1
+        );
+      }
+      const sortedObjData: GroupedData = { ...objData, [title]: sortedData };
+      setTempObjData(sortedObjData);
     }
-    setTempData(cloneData);
   };
   return (
     <>
@@ -51,7 +65,7 @@ const ShowData = ({ transaction, oldTransactions }: ShowDataProps) => {
               <ShowTable
                 title={item}
                 sort={sort}
-                arr={transaction[item]}
+                arr={tempObjData[item]}
                 sortMethod={sortMethod}
               />
             </div>
