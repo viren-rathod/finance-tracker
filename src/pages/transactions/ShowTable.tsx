@@ -42,7 +42,11 @@ const ShowTable = ({ title, sort, arr }: ShowTableType) => {
     if (Array.isArray(arr) && arr.length) {
       setMyArr(arr.slice(firstItemIndex, lastItemIndex));
     }
-  }, [arr, firstItemIndex, lastItemIndex]);
+    if (Array.isArray(arr) && arr.length && arr.length - 1 < firstItemIndex) {
+      setMyArr(arr.slice(0, 3));
+      setPagination({ ...pagination, currentPage: pagination.currentPage - 1 });
+    }
+  }, [arr, firstItemIndex, lastItemIndex,pagination]);
 
   const handleLimitChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setPagination({
@@ -57,6 +61,7 @@ const ShowTable = ({ title, sort, arr }: ShowTableType) => {
       <div className="container main">
         {Array.isArray(myArr) &&
         Object.keys(myArr[0]) &&
+        myArr.length &&
         Object.keys(myArr[0]).length !== 0 ? (
           <>
             <h3>{title ? title : "All Transactions"}</h3>

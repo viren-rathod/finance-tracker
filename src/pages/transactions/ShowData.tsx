@@ -49,7 +49,9 @@ const ShowData = ({ transaction, oldTransactions }: ShowDataProps) => {
         );
       }
       const sortedObjData: GroupedData = { ...objData, [title]: sortedData };
-      setTempObjData(sortedObjData);
+      sortedData.length > 0
+        ? setTempObjData(sortedObjData)
+        : setTempObjData(objData);
     }
   };
   return (
